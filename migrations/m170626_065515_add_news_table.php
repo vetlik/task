@@ -15,9 +15,11 @@ class m170626_065515_add_news_table extends Migration
         $this->createTable('{{%news}}', [
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
-            'text' => $this->string()->notNull(),
+            'text' => $this->string(1000)->notNull(),
             'image' => $this->string(),
+            'published' => $this->smallInteger()->defaultValue(1),
             'created_at' => $this->dateTime(),
+            'updated_at' => $this->dateTime(),
         ], $tableOptions);
     }
 

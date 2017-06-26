@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\SignupForm;
+use app\models\News;
 
 class SiteController extends Controller
 {
@@ -67,7 +68,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $news = News::getAllPublished();
+        //echo var_dump($news); die();
+        return $this->render('index',compact('news'));
     }
 
     /**
@@ -149,4 +152,11 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionItem($id)
+    {
+        $item = News::getOneNews($id);
+        return $this->render('item',compact('item'));
+    }
+
 }
