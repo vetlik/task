@@ -4,12 +4,10 @@ namespace app\controllers;
 
 use Yii;
 use app\models\News;
-use app\models\NewsSearch;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\data\ActiveDataProvider;
 /**
  * NewsController implements the CRUD actions for News model.
  */
@@ -21,15 +19,6 @@ class NewsController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -45,13 +34,13 @@ class NewsController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new NewsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        $dataProvider = new ActiveDataProvider([
+            'query' => News::find()->orderBy('id DESC'),
+            'pagination' => [
+                'pageSize' => 3,
+            ],
         ]);
+        return $this->render('index',compact('dataProvider'));
     }
 
     /**
@@ -114,6 +103,34 @@ class NewsController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionPublish($id)
+    {
+        if(!$id) {
+            throw new BadRequestHttpException('Запись не найдена');
+        }
+        $model = $this->findModel($id);
+        if($model->published == 0) {
+            $model->updateAttributes(['published'=>1]);
+        }
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+    public function actionDeactivate($id)
+    {
+        if(!$id) {
+            throw new BadRequestHttpException('Запись не найдена');
+        }
+        $model = $this->findModel($id);
+        if($model->published == 1) {
+            $model->updateAttributes(['published'=>0]);
+        }
+        return $this->redirect(\Yii::$app->request->referrer);
     }
 
     /**

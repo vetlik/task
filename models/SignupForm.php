@@ -23,23 +23,23 @@ class SignupForm extends Model
     {
         return [
             ['username', 'trim'],
-            ['username', 'required'],
+            ['username', 'required',  'message' => 'Это поле не может быть пустым'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['surname', 'trim'],
             ['surname', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
+            ['email', 'required',  'message' => 'Это поле не может быть пустым'],
+            ['email', 'email',  'message' => 'email не соответствует стандарту user@mail.com'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This email address has already been taken.'],
 
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            ['password', 'required',  'message' => 'Это поле не может быть пустым'],
+            ['password', 'string', 'min' => 6,  'message' => 'Пароль должен содержать 6 и более символов'],
 
-            ['confirm', 'required'],
-            ['confirm', 'compare', 'compareAttribute' => 'password'],
+            ['confirm', 'required',  'message' => 'Это поле не может быть пустым'],
+            ['confirm', 'compare', 'compareAttribute' => 'password',  'message' => 'Пароли не совпадают'],
         ];
     }
 

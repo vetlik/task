@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\News */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'News', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Новости', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="news-view">
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Вы уверены, что хотите удалить пост?',
+                'confirm' => 'Вы уверены, что хотите удалить новость?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,14 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'title',
+             'title',
             'text',
             'image',
-            'published',
-            'created_at',
-            'updated_at',
         ],
+
     ]) ?>
 
 </div>

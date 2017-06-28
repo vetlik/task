@@ -12,27 +12,43 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="news-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
         <?= Html::a('Создать новость', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        'pager' => ['maxButtonCount' => 5],
+        'layout' => "{pager}\n{summary}\n{items}\n{pager}",
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered'
+        ],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            'title:text:Название',
+            'text:text:Текст статьи',
+            'image:image:Изображение',
+            ['class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete} {publish} {deactivate}',
+                'buttons' => [
+                    'publish' => function ($url,$model) {
+                        if ($model->published == 1){
+                           return '<span class="glyphicon glyphicon-ok" title="Опубликовано"></span>';
+                        }else{
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-share-alt" title="Опубликовать"></span>',
+                                $url);}
+                    },
+                    'deactivate' => function ($url,$model) {
+                        if ($model->published == 0){
+                            return '<span class="glyphicon glyphicon-ok-circle" title="Деактивировано"></span>';
+                        }else{
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-remove-circle" title="Деактивировать"></span>',
+                                $url);}
+                    },
+                ],
 
-            //'id',
-            'title',
-            'text',
-            'image',
-            'published',
-            // 'created_at',
-            // 'updated_at',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            ],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>

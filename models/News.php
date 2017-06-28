@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "{{%news}}".
@@ -31,10 +32,10 @@ class News extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'text'], 'required'],
+            [['title', 'text'], 'required', 'message' => 'Это поле не может быть пустым'],
             [['published'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['title', 'text', 'image'], 'string', 'max' => 255],
+            [['title', 'text'], 'string', 'max' => 1000],
         ];
     }
 
@@ -66,6 +67,7 @@ class News extends \yii\db\ActiveRecord
     /**
      * @return News[]|array
      */
+
     public static function getAllPublished()
     {
         $allPublishedNews = self::find()->where(['published' => 1])->orderBy('id DESC')->all();
