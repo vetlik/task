@@ -71,7 +71,7 @@ class SiteController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => News::find()->where(['published'=>1])->orderBy('id DESC'),
             'pagination' => [
-                'pageSize' => 3,
+                'pageSize' => 5,
             ],
         ]);
         return $this->render('index',compact('dataProvider'));

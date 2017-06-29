@@ -1,7 +1,7 @@
 <?php
 
 use yii\widgets\ListView;
-
+$this->title = 'Новостной блог';
 echo ListView::widget([
     'dataProvider' => $dataProvider,
     'pager' => ['maxButtonCount' => 5],

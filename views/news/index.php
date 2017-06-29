@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\NewsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Управление новостями';
@@ -26,7 +25,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'title:text:Название',
             'text:text:Текст статьи',
-            'image:image:Изображение',
+            [
+                'label' => 'Изображение',
+                'format' => 'raw',
+                'value' => function($model){
+                    $image = $model->getImage();
+                    return Html::img($image->getUrl('x100'),[
+                        'alt'=>'image.png',
+                        'style' => 'width:100px;'
+                    ]);
+                },
+            ],
             ['class' => 'yii\grid\ActionColumn',
                 'template' => '{update} {delete} {publish} {deactivate}',
                 'buttons' => [
@@ -51,4 +60,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
+<?php Pjax::end();?></div>

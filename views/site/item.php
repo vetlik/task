@@ -14,8 +14,8 @@ $this->title = 'Просмотр новости';
                 <img src="<?=$image->getUrl('x300')?>" class="img-circle">
             <? endforeach?>
         <?php endif;?>
-        <h1><?=$item->title?></h1>
-        <p><?=$item->text?></p>
+        <h1 class="justified"><?=$item->title?></h1>
+        <p class=""><?=$item->text?></p>
     </div>
     <a href="<?=Url::to(['site/index', ])?>">назад</a>
 </div>

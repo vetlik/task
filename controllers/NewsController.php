@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
+use yii\web\BadRequestHttpException;
 /**
  * NewsController implements the CRUD actions for News model.
  */
@@ -38,7 +39,7 @@ class NewsController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => News::find()->orderBy('id DESC'),
             'pagination' => [
-                'pageSize' => 3,
+                'pageSize' => 5,
             ],
         ]);
         return $this->render('index',compact('dataProvider'));
