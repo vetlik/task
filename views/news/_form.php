@@ -2,12 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
-    if(isset($model->image) && file_exists(Yii::getAlias('@webroot', $model->image)))
-    {
-        echo Html::img($model->image, ['class'=>'img-responsive']);
-        echo $form->field($model,'del_img')->checkBox(['class'=>'span-1']);
-    }
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\News */
@@ -15,16 +10,24 @@ use yii\widgets\ActiveForm;
 ?>
 <div class="news-form">
 
-    <?php $form = ActiveForm::begin(['id' => 'blog-form']); ?>
+    <?php $form = ActiveForm::begin(['id' => 'blog-form','options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'title')->label('Название')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'text')->label('Описание')->textarea(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'image')->fileInput() ?>
+    <div class="form-group">
+            <?php if ($images = $model->getImages()):?>
+            <? foreach ($images as $image):
+                    $id = $model->id.'-'.$image->id;
+                ?>
+                     <a href="<?=Url::to(['news/deleteimg', 'id' => $id])?>"> <img src="<?=$image->getUrl('x200')?>" ></a>
+            <? endforeach?>
+            <?php endif;?>
+    </div>
+    <?= $form->field($model, 'image')->label('Прикрепите изображение')->fileInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Применить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

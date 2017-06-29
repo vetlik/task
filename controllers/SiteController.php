@@ -74,8 +74,6 @@ class SiteController extends Controller
                 'pageSize' => 3,
             ],
         ]);
-//        $news = News::getAllPublished();
-        //echo var_dump($news); die();
         return $this->render('index',compact('dataProvider'));
     }
 
@@ -134,7 +132,17 @@ class SiteController extends Controller
     public function actionItem($id)
     {
         $item = News::getOneNews($id);
-        return $this->render('item',compact('item'));
+        $model = new News();
+        return $this->render('item',compact('item','model'));
     }
 
 }
+
+function smart_cut($text, $words = 3) {
+    $match = array();
+    $r = preg_match("/^[^\s]+([\s]+[^\s]+){0,".($words-1)."}/", $text, $match);
+    if ($r)
+        return $match[0];
+    return '';
+}
+

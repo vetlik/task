@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\News */
 
-$this->title = $model->title;
+$this->title = 'Просмотр новости';
 $this->params['breadcrumbs'][] = ['label' => 'Новости', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -22,17 +22,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 'confirm' => 'Вы уверены, что хотите удалить новость?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ]); ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-             'title',
-            'text',
-            'image',
+            'title:text:Название',
+            'text:text:Текст статьи',
         ],
 
-    ]) ?>
+    ]) ;?>
+    <div class="form-group">
+            <?php
+            if ($images =$model->getImages()):
+                ?>
+                    <? foreach ($images as $image):?>
+                              <img src="<?=$image->getUrl('x200')?>">
+                    <? endforeach?>
+            <?php endif;?>
+    </div>
 
 </div>

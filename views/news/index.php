@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'pager' => ['maxButtonCount' => 5],
         'layout' => "{pager}\n{summary}\n{items}\n{pager}",
         'tableOptions' => [
-            'class' => 'table table-striped table-bordered'
+            'class' => 'table table-striped table-hover'
         ],
         'columns' => [
             'title:text:Название',

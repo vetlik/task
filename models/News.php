@@ -21,6 +21,18 @@ class News extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            'image' => [
+                'class' => 'rico\yii2images\behaviors\ImageBehave',
+            ]
+        ];
+    }
+
     public static function tableName()
     {
         return '{{%news}}';
@@ -36,6 +48,7 @@ class News extends \yii\db\ActiveRecord
             [['published'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['title', 'text'], 'string', 'max' => 1000],
+            [['image'], 'image',  'extensions' => 'png,jpg', 'skipOnEmpty' => true, 'maxFiles' => 4],
         ];
     }
 
