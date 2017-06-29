@@ -34,5 +34,6 @@ class Create_userController extends Controller
         $user->setPassword($password);
         $user->generateAuthKey();
         if($user->save()) echo "User added!";
+        else echo 'Error!';
     }
 }

@@ -109,13 +109,13 @@ class NewsController extends Controller
         $tmp = explode('-',$id);
         $rid = $tmp[0];
         $iid = $tmp[1];
-        $model = News::getOneNews($rid);
+        if($model = News::getOneNews($rid)){
         $images = $model->getImages();
         foreach($images as $img){
             if ($img->id == $iid){$model->removeImage($img);}
         }
         return $this->redirect(\Yii::$app->request->referrer);
-    }
+    }}
 
     /**
      * Deletes an existing News model.
