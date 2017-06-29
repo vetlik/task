@@ -20,7 +20,7 @@ use yii\helpers\Url;
             <? foreach ($images as $image):
                     $id = $model->id.'-'.$image->id;
                 ?>
-                     <a href="<?=Url::to(['news/deleteimg', 'id' => $id])?>"> <img src="<?=$image->getUrl('x200')?>" ></a>
+                     <a href="<?=Url::to(['news/deleteimg', 'id' => $id])?>"> <img src="<?=$image->getUrl('x200')?>" title="Удалить"></a>
             <? endforeach?>
             <?php endif;?>
     </div>
